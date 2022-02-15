@@ -37,5 +37,6 @@ int binsearch() {
 
 int main() {
     binsearch();
+
     return 0;
 }
