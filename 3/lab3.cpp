@@ -19,6 +19,7 @@ int model(int width, int height, int num, int x_coord[], int y_coord[]) {
             stopped[i] = true;
         } else all_unmobile = false;
     }
+
     while (not all_unmobile) {
         all_unmobile = true;
         time++;
