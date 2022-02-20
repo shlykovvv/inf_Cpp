@@ -74,11 +74,11 @@ int model(int width, int height, int num, int x_coord[], int y_coord[]) {
     }
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            std::cout << visual[i * width + j] << " ";
+//            std::cout << visual[i * width + j] << " ";
         }
-        std::cout << std::endl;
+//        std::cout << std::endl;
     }
-    std::cout << std::endl;
+//    std::cout << std::endl;
 
     Check(width, height, num, x_coord, y_coord, x_mem, y_mem, stopped);
     all_unmobile = true;
@@ -113,23 +113,46 @@ int model(int width, int height, int num, int x_coord[], int y_coord[]) {
         }
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                std::cout << visual[i * width + j] << " ";
+//                std::cout << visual[i * width + j] << " ";
             }
-            std::cout << std::endl;
+//            std::cout << std::endl;
         }
-        std::cout << std::endl;
+//        std::cout << std::endl;
     }
     return time;
 }
 
 
-int main() {
-    int num = 3, width = 5, height = 5, time_sum = 0, accuracy = 1;
-    int x_coord[num];
-    int y_coord[num];
+void calc(int demention, int num, int accuracy) {
+    int time_sum = 0;
+    int dots_max = (demention) * (demention);
+    int x_coord[dots_max];
+    int y_coord[dots_max];
 
-    create_coords(num, width, height, x_coord, y_coord);
-    std::cout << model(width, height, num, x_coord, y_coord);
+    for(int i = 1; i <= 0.6 * demention * demention; i += 1){
+        num = i;
+        time_sum = 0;
+        for(int j = 0; j < accuracy; j++) {
+            create_coords(num, demention, demention, x_coord, y_coord);
+            time_sum += model(demention, demention, num, x_coord, y_coord);
+        }
+        std::cout << (float)time_sum / (float)accuracy << ',' << ' ';
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
+}
+
+
+int main() {
+    int num = 10, accuracy = 1000;
+
+    int demention_begin = 5;
+    int demention_step = 2;
+    int steps = 5;
+
+    for(int k = demention_begin; k < demention_begin + demention_step*steps ; k += demention_step){
+        calc(k, num, accuracy);
+    }
     return 0;
 }
 
