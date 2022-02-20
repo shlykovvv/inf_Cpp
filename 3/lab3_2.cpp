@@ -9,6 +9,48 @@ int rndint(int min, int max) {
     return dist(rng);
 }
 
+void Check(int width, int height, int &num, int x_coord[], int y_coord[], bool stopped[]) {
+    for (int i = 0; i < num; i++) {
+        for (int j = i + 1; j < num; j++) {
+            if ((abs(x_coord[i] - x_coord[j]) + abs(y_coord[i] - y_coord[j]) <= 1)) {
+                stopped[i] = true;
+                stopped[j] = true;
+            }
+        }
+        if ((x_coord[i] == 0) or (x_coord[i] == width - 1) or (y_coord[i] == 0) or (y_coord[i] == height - 1)) {
+            stopped[i] = true;
+        }
+    }
+}
+
+void create_coords(int num, int width, int height, int x_coord[], int y_coord[]){
+    int x_rand;
+    int y_rand;
+    bool F, f;
+
+    for (int i = 0; i <= num - 1; i += 1) {
+        F = true;
+        while(F){
+            f = false;
+            x_rand = rndint(0, width - 1);
+            y_rand = rndint(0, height - 1);
+            for (int j = 0; j <= num - 1; j +=1){
+                if ((x_coord[j] == x_rand) and (y_coord[j] == y_rand)){
+                    f = true;
+                }
+                if(f){
+                    F = true;
+                }
+                else{
+                    F = false;
+                }
+            }
+        }
+        x_coord[i] = x_rand;
+        y_coord[i] = y_rand;
+    }
+}
+
 int model(int width, int height, int num, int x_coord[], int y_coord[]) {
     int time = 0, rnd_number;
     bool all_unmobile = true;
@@ -28,13 +70,12 @@ int model(int width, int height, int num, int x_coord[], int y_coord[]) {
     }
     std::cout << std::endl;
 //
+    Check(width, height, num, x_coord, y_coord, stopped);
+    all_unmobile = true;
     for (int i = 0; i < num; i++) {
-        if ((x_coord[i] == 0) or (y_coord[i] == 0) or (x_coord[i] == width) or (y_coord[i] == height)) {
-            stopped[i] = true;
-        } else all_unmobile = false;
+        if (not stopped[i]) {all_unmobile = false;}
     }
     while (not all_unmobile) {
-        all_unmobile = true;
         time++;
         for (int i = 0; i < num; i++) {
             if (not stopped[i]) {
@@ -43,10 +84,12 @@ int model(int width, int height, int num, int x_coord[], int y_coord[]) {
                 if (rnd_number == 2) { y_coord[i]++; }
                 if (rnd_number == 3) { x_coord[i]--; }
                 if (rnd_number == 4) { y_coord[i]--; }
-                if ((x_coord[i] == 0) or (y_coord[i] == 0) or (x_coord[i] == width - 1) or (y_coord[i] == height - 1)) {
-                    stopped[i] = true;
-                } else all_unmobile = false;
             }
+        }
+        Check(width, height, num, x_coord, y_coord, stopped);
+        all_unmobile = true;
+        for (int i = 0; i < num; i++) {
+            if (not stopped[i]) {all_unmobile = false;}
         }
 //
         for (int i = 0; i < width * height; i++) {visual[i] = 1;}
@@ -66,19 +109,23 @@ int model(int width, int height, int num, int x_coord[], int y_coord[]) {
 }
 
 int main() {
-    int num = 1, time_sum = 0, accuracy = 1;
+    int num = 3, width = 5, height = 5, time_sum = 0, accuracy = 1;
     int x_coord[num];
     int y_coord[num];
-    for (int i = 5; i <= 5; i += 2) {
-        for (int j = 0; j < accuracy; j++) {
-            x_coord[0] = i / 2;
-            y_coord[0] = i / 2;
-            time_sum += model(i, i, num, x_coord, y_coord);
-        }
-        std::cout << "aboba" << (float)time_sum / (float)accuracy << ' ';
-        time_sum = 0;
-        std::cout << std::endl;
-    }
+
+    create_coords(num, width, height, x_coord, y_coord);
+    std::cout << model(width, height, num, x_coord, y_coord);
+
+//    for (int i = 5; i <= 5; i += 2) {
+//        for (int j = 0; j < accuracy; j++) {
+//            x_coord[0] = i / 2;
+//            y_coord[0] = i / 2;
+//            time_sum += model(i, i, num, x_coord, y_coord);
+//        }
+//        std::cout << "aboba" << (float)time_sum / (float)accuracy << ' ';
+//        time_sum = 0;
+//        std::cout << std::endl;
+//    }
     return 0;
 }
 
