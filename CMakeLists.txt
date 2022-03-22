@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled 3/lab3_3.cpp)
+add_executable(untitled distribution/main.cpp)
