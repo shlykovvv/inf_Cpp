@@ -1,5 +1,4 @@
 #include <iostream>
-using namespace std;
 
 
 //обычное дерево
@@ -29,7 +28,7 @@ bool exists(node * root, int val){
 int depth(node * root){
     if (root == nullptr)
         return 0;
-    return max(depth(root -> right), depth(root->left)) + 1;
+    return std::max(depth(root -> right), depth(root->left)) + 1;
 }
 
 node * insert (node * root, int val){
@@ -74,7 +73,7 @@ bool exists_avl(node_avl * root, int val){
 int depth_avl(node_avl * root){
     if (root == nullptr)
         return 0;
-    return max(depth_avl(root -> right), depth_avl(root->left)) + 1;
+    return std::max(depth_avl(root -> right), depth_avl(root->left)) + 1;
 }
 
 int height (node_avl * n) {
@@ -98,8 +97,8 @@ node_avl *rightRotate(node_avl *y)
     x->right = y;
     y->left = T;
 
-    y->height = max(height(y->left), height(y->right)) + 1;
-    x->height = max(height(x->left), height(x->right)) + 1;
+    y->height = std::max(height(y->left), height(y->right)) + 1;
+    x->height = std::max(height(x->left), height(x->right)) + 1;
     return x;
 }
 
@@ -111,8 +110,8 @@ node_avl *leftRotate(node_avl *x)
     y->left = x;
     x->right = T;
 
-    x->height = max(height(x->left), height(x->right)) + 1;
-    y->height = max(height(y->left), height(y->right)) + 1;
+    x->height = std::max(height(x->left), height(x->right)) + 1;
+    y->height = std::max(height(y->left), height(y->right)) + 1;
     return y;
 }
 
@@ -129,7 +128,7 @@ node_avl* insert_avl(node_avl* root, int key)
     else
         return root;
 
-    root->height = 1 + max(height(root->left), height(root->right));
+    root->height = 1 + std::max(height(root->left), height(root->right));
 
     int balance = bfactor(root);
 
@@ -164,7 +163,7 @@ int main(){
     for(int i = 1; i<10; i++){
         root = insert(root, i);
     }
-    cout << depth(root) << endl;
+    std::cout << depth(root) << std::endl;
 
     return 0;
 }
