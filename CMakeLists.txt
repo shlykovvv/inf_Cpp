@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled sorts/heapsort.cpp)
+add_executable(untitled for_kr/list.cpp for_kr/2B.cpp)
