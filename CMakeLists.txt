@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled for_kr/list.cpp for_kr/2B.cpp)
+add_executable(untitled structures/double_list_orig.cpp)
