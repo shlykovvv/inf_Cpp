@@ -71,6 +71,7 @@ void stringInsert(std::string &st, int idx, std::string s)
 
 
 int main () {
+    // reading the string
     std::string expression;
     std::getline(std::cin, expression);
     for (int i = 0; i < expression.length(); i++) {
@@ -80,7 +81,7 @@ int main () {
         }
     }
 
-    int open = -1, close = -1, comma1 = -1, comma2 = -1;
+    int open = -1, close = -1, comma1 = -1, comma2 = -1; // indexes
     for (int i = 0; i < expression.length(); i++) {
         if (expression[i] == '(') {
             open = i;
@@ -88,7 +89,7 @@ int main () {
         if (expression[i] == ',') {
             comma1 = i;
         }
-        if (expression[i] == '*') {
+        if (expression[i] == '*') { // firstly we do multiplication
             for (int j = i + 2; j < expression.length(); j++) {
                 if (expression[j] == ',') {
                     comma2 = j;
@@ -99,7 +100,7 @@ int main () {
                 }
             }
 
-            std::string x1 = "", y1 = "", x2 = "", y2 = "";
+            std::string x1 = "", y1 = "", x2 = "", y2 = ""; // writing all coords to strings
             for (int j = open + 1; j < comma1; j++) {
                 x1 += expression[j];
             }
@@ -113,16 +114,19 @@ int main () {
                 y2 += expression[j];
             }
 
+            // multiplication at the object level
             Rectangle rect_temp = Rectangle(Point(std::stoi(x1),std::stoi(y1)))
                     * Rectangle(Point(std::stoi(x2),std::stoi(y2)));
+            // changing (..,..)*(..,..) to answer (..,..)
             std::string str_ins = std::to_string(rect_temp.pt.x) + ',' + std::to_string(rect_temp.pt.y);
             stringDel(expression, open+1, close-1);
             stringInsert(expression, open+1, str_ins);
-            i = open-1;
+            i = open-1; //return to the position of the first bracket
             open = -1; close = -1; comma1 = -1; comma2 = -1;
         }
     }
 
+    // repeat with '+'
     open = -1; close = -1; comma1 = -1; comma2 = -1;
     for (int i = 0; i < expression.length(); i++) {
         if (expression[i] == '(') {
