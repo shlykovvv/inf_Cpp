@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled structures/queue_orig.cpp)
+add_executable(untitled "3 semester/14.09/2lab.cpp")

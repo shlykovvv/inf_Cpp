@@ -1,5 +1,6 @@
 #include <iostream>
 
+
 void qsort(int *mas, int size) {
     int i = 0;
     int j = size - 1;
